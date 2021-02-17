@@ -1,3 +1,3 @@
 export const Config = {
-  defaultIncome: 12900
+  defaultIncome: 5900
 }

@@ -3,6 +3,8 @@ import { Months } from "../config/months";
 
 export const EnterIncome = (props) => {
 
+  const { date } = props;
+
   const [ income, setIncome ] = useState(props.defaultIncome);
 
   const onChangeIncome = (event) => {
@@ -14,7 +16,6 @@ export const EnterIncome = (props) => {
   }
 
   const getPreviusMonth = () => {
-    const date = new Date();
     const currentMonth = date.getMonth();
     if ( currentMonth > 0 ) {
       return Months[ currentMonth - 1 ];
