@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Months } from "../config/months";
 
 export const EnterIncome = (props) => {
 
@@ -12,10 +13,19 @@ export const EnterIncome = (props) => {
 
   }
 
+  const getPreviusMonth = () => {
+    const date = new Date();
+    const currentMonth = date.getMonth();
+    if ( currentMonth > 0 ) {
+      return Months[ currentMonth - 1 ];
+    }
+    return "@todo grudzień poprzedni rok";
+  }
+
   return (
     <form>
       <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Podaj dochód za: ...{ income }</label>
+        <label htmlFor="exampleInputEmail1" className="form-label">Podaj dochód za: {getPreviusMonth()} </label>
         <input type="number" className="form-control" aria-describedby="income" onChange={ onChangeIncome } value={income} />
       </div>
       <button type="submit" className="btn btn-primary" onClick={ submitIncome }>Zapisz</button>
