@@ -15,7 +15,7 @@ export const EntriesCalculations = (props) => {
   return (
     <>
       <Entries filteredEntries={ filteredEntries } />
-      <Calculations filteredEntries={ filteredEntries } />
+      <Calculations filteredEntries={ filteredEntries } previousYear={ previousYear } />
     </>
   )
 };
