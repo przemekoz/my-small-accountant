@@ -4,10 +4,31 @@ import { CurrentDate } from './components/CurrentDate';
 import { EnterIncome } from './components/EnterIncome';
 import { EntriesComponent } from './components/EntriesComponent';
 import { Config } from './config/config';
-// import logo from '../public/logo.png';
+import { Entries } from './data/entries';
+import { getPreviousMonthYear } from "./helpers";
 
 function App() {
   const date = new Date();
+  const currentDate = date.getDate();
+  
+
+  // const currentMonth = date.getMonth();
+  //@todo TESTS
+  const currentMonth = 5;
+
+
+  const currentYear = date.getFullYear();
+  const [ previousMonth, previousYear ] = getPreviousMonthYear(currentMonth, currentYear);
+
+  const hasPraviousMonthIncome = () => {
+    return Entries.find(entry => entry.month === previousMonth && entry.year === previousYear && entry.income > 0);
+  }
+
+  const propsCurrentMonthYear = {
+    currentMonth,
+    currentYear
+  };
+
   return (
     <div className="App">
       <nav className="navbar navbar-light bg-light">
@@ -21,17 +42,25 @@ function App() {
       <div className="container">
         <div className="row align-items-start">
           <div className="col">
-            <CurrentDate date={ date } />
+            <CurrentDate { ...propsCurrentMonthYear } currentDate={ currentDate } />
           </div>
           <div className="col">
-            <EnterIncome date={ date } defaultIncome={ Config.defaultIncome } />
-            <EntriesComponent />
-            <Calculations date={ date } />
+            { !hasPraviousMonthIncome() && <EnterIncome { ...propsCurrentMonthYear } defaultIncome={ Config.defaultIncome } /> }
+            { hasPraviousMonthIncome() && <EntriesCalculations { ...propsCurrentMonthYear } /> }
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+const EntriesCalculations = (propsCurrentMonthYear) => {
+  return (
+    <>
+      <EntriesComponent />
+      <Calculations { ...propsCurrentMonthYear } />
+    </>
+  )
+};
 
 export default App;

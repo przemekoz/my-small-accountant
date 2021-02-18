@@ -2,10 +2,10 @@ import React from "react";
 import { Months } from "../config/months";
 
 export const CurrentDate = (props) => {
-  const { date } = props;
+  const { currentMonth, currentYear, currentDate } = props;
   return (
     <h3>
-      { date.getDate() } { Months[ date.getMonth() ] }, { date.getFullYear() }
+      { currentDate } { Months[ currentMonth ] }, { currentYear }
     </h3>
   );
 };

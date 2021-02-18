@@ -2,20 +2,19 @@ import React from "react";
 import { Entries } from "../data/entries";
 
 export const Calculations = (props) => {
-  const { date } = props;
+  const { currentMonth, currentYear } = props;
   return (
     <>
-      {/* incomes: { getIncomes(date.getMonth(), date.getFullYear()) } */ }
-      incomes: { getIncomes(4, date.getFullYear()) }
+      incomes: { getIncomes(currentMonth, currentYear) }
     </>
   );
 };
 
-const getIncomes = (currentMonth, currentYear) => {
+export const getIncomes = (currentMonth, currentYear) => {
   if (currentMonth > 0) {
     console.log("od stycznia do miesiąc przed aktualnym miesiącem")
     const filteredEntries = Entries.filter(entry => {
-      return parseInt(entry.year, 10) === parseInt(currentYear, 10) && entry.month < currentMonth;
+      return entry.year === currentYear && entry.month < currentMonth;
     });
 
     console.log(filteredEntries)
