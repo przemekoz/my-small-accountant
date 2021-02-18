@@ -10,12 +10,10 @@ function App() {
   const date = new Date();
   const currentDate = date.getDate();
   
-
   // const currentMonth = date.getMonth();
   //@todo TESTS
   const currentMonth = 4;
-
-
+  
   const currentYear = date.getFullYear();
   const [ previousMonth, previousYear ] = getPreviousMonthYear(currentMonth, currentYear);
 

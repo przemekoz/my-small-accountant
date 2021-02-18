@@ -3,20 +3,21 @@ import { Config } from '../config/config';
 import { getIncomes, getZusTransfered } from '../helpers';
 
 export const Calculations = (props) => {
-  const { filteredEntries, previousYear } = props;
-
-  const configYear = Config.taxes.find( taxes => taxes.year === previousYear );
+  const { filteredEntries, configTaxYear } = props;
 
   const incomes = getIncomes(filteredEntries);
   const countZusTransfered = getZusTransfered(filteredEntries);
 
-  let formula = countZusTransfered > 1
-    ? `[ ${incomes} - ( ${countZusTransfered} * ${configYear.zusSpl} ) ] * ${Config.tax}% - ${countZusTransfered} * ${configYear.zusZdr}`
-    : `( ${incomes} - ${configYear.zusSpl} ) * ${Config.tax}% - ${configYear.zusZdr}`;
-  if ( countZusTransfered === 0 ) {
-    formula = `${incomes} * ${Config.tax}%`;
-  }
+  const tax = Config.tax;
+  const zusSpl = configTaxYear.zusSpl;
+  const zusZdr = configTaxYear.zusZdr;
 
+  let formula = countZusTransfered > 1
+    ? `[ ${incomes} - ( ${countZusTransfered} * ${zusSpl} ) ] * ${tax}% - ${countZusTransfered} * ${zusZdr}`
+    : `( ${incomes} - ${zusSpl} ) * ${tax}% - ${zusZdr}`;
+  if ( countZusTransfered === 0 ) {
+    formula = `${incomes} * ${tax}%`;
+  }
 
   return (
     <>
