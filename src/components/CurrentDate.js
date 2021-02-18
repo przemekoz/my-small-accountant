@@ -1,16 +1,19 @@
 import React from "react";
 import { Months } from "../config/months";
+import { EmojiSunglasses } from "react-bootstrap-icons";
 
 export const CurrentDate = (props) => {
   const { currentMonth, currentYear, currentDate } = props;
   const transferIn = 20 - currentDate;
   return (
-    <>
-      <small className="text-muted">Teraz jest...</small>
-      <h3>
-        { currentDate } { Months[ currentMonth ] }, { currentYear }
-      </h3>
-      {transferIn > 0 && <small className="text-warning">Termin zapłaty podatku już za: {transferIn} { transferIn === 1 ? "dzień" : "dni" }</small>}
-    </>
+    <div className="card">
+      <div className="card-header">
+       Hola señor <EmojiSunglasses size="19" />
+      </div>
+      <div className="card-body">
+        <h3>{ currentDate } { Months[ currentMonth ] }, { currentYear }</h3>
+        { transferIn > 0 && <small className="text-warning">Pamiętaj, że juz za: <strong>{ transferIn } { transferIn === 1 ? "dzień" : "dni" }</strong> mija termin opłaty podatku.</small> }
+      </div>
+    </div>
   );
 };

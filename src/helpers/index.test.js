@@ -3,6 +3,8 @@ import {
   getPreviousMonthYear, 
   getIncomes,
   getZusTransfered,
+  getTransferredTax,
+  getTaxToPay,
  } from './';
 
 test('getPreviousMonthYear should returns january 2020', () => {
@@ -139,3 +141,119 @@ test('getZusTransfered should returns 1', () => {
   expect(count).toBe(1);
 });
 
+
+// -------------------------------------------------------------------------------
+
+test('getTransferredTax should returns zero 0', () => {
+  const entries = [];
+  const sum = getTransferredTax(entries);
+  expect(sum).toBe(0);
+});
+
+test('getTransferredTax should returns zero 0', () => {
+  const entries = [
+    {
+      transferredTax: 0
+    }
+  ];
+  const sum = getTransferredTax(entries);
+  expect(sum).toBe(0);
+});
+
+test('getTransferredTax should returns zero 0', () => {
+  const entries = [
+    {
+      transferredTax: 0
+    },
+    {
+      transferredTax: 0
+    },
+  ];
+  const sum = getTransferredTax(entries);
+  expect(sum).toBe(0);
+});
+
+test('getTransferredTax should returns 101', () => {
+  const entries = [
+    {
+      transferredTax: 0
+    },
+    {
+      transferredTax: 101
+    },
+    {
+      transferredTax: 0
+    },
+  ];
+  const sum = getTransferredTax(entries);
+  expect(sum).toBe(101);
+});
+
+
+// -------------------------------------------------------------------------------
+// metoda narastajaca
+// (dochod - skaladki spoleczne) * ryczałt - skladka zdrowotna do odliczen - zaplacony podatek
+// -------------------------------------------------------------------------------
+
+test('getTaxToPay should returns valid value', () => {
+  const incomes = 1000;
+  const countZusTransfered = 0;
+  const zusSpl = 101.11;
+  const tax = 15;
+  const zusZdr = 192.22;
+  const countTransferedTax = 0;
+  // ((1000 - 0 * 101.11) * 15%) - 0 * 192.22 - 0
+  // 1000 * 15% 
+  const result = getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax);
+  expect(result).toBe(150);
+});
+
+test('getTaxToPay should returns valid value', () => {
+  const incomes = 12900;
+  const countZusTransfered = 0;
+  const zusSpl = 101.11;
+  const tax = 15;
+  const zusZdr = 192.22;
+  const countTransferedTax = 0;
+  // 12900 * 15% 
+  const result = getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax);
+  expect(result).toBe(1935);
+});
+
+test('getTaxToPay should returns valid value', () => {
+  const incomes = 350;
+  const countZusTransfered = 1;
+  const zusSpl = 101.11;
+  const tax = 15;
+  const zusZdr = 192.22;
+  const countTransferedTax = 0;
+  // ((350 - 101.11) * 15%) - 192.22 - 0
+  // when tax is less than 0 then result should be 0
+  const result = getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax);
+  expect(result).toBe(0);
+});
+
+test('getTaxToPay should returns valid value', () => {
+  const incomes = 12900;
+  const countZusTransfered = 1;
+  const zusSpl = 101.11;
+  const tax = 15;
+  const zusZdr = 192.22;
+  const countTransferedTax = 50;
+  // ((12900 - 1 * 101.11) * 15%) - 1 * 192.22 - 50
+  const result = getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax);
+  expect(result).toBe(1678);
+});
+
+
+test('getTaxToPay should returns valid value', () => {
+  const incomes = 168901;
+  const countZusTransfered = 12;
+  const zusSpl = 123.24;
+  const tax = 15;
+  const zusZdr = 191.21;
+  const countTransferedTax = 9899;
+  // ((168901 - 12 * 123.24) * 15%) - 12 * 191.21 - 9899
+  const result = getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax);
+  expect(result).toBe(12920);
+});

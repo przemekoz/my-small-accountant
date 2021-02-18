@@ -1,3 +1,27 @@
+export const EntriesData1 = [
+  {
+    year: 2021,
+    month: 0,
+    income: 0,
+    transferredZus: false,
+    transferredTax: 0,
+  },
+  {
+    year: 2021,
+    month: 1,
+    income: 0,
+    transferredZus: false,
+    transferredTax: 0,
+  },
+  {
+    year: 2021,
+    month: 2,
+    income: 1,
+    transferredZus: true,
+    transferredTax: 0,
+  },
+];
+
 export const EntriesData = [
   {
     year: 2021,
@@ -26,5 +50,68 @@ export const EntriesData = [
     income: 5500,
     transferredZus: true,
     transferredTax: 602,
+  },
+  {
+    year: 2021,
+    month: 4,
+    income: 7500,
+    transferredZus: true,
+    transferredTax: 951,
+  },
+  {
+    year: 2021,
+    month: 5,
+    income: 9500,
+    transferredZus: true,
+    transferredTax: 951,
+  },
+  {
+    year: 2021,
+    month: 6,
+    income: 9500,
+    transferredZus: true,
+    transferredTax: 951,
+  },
+  {
+    year: 2021,
+    month: 7,
+    income: 8500,
+    transferredZus: true,
+    transferredTax: 820,
+  },
+  {
+    year: 2021,
+    month: 8,
+    income: 8500,
+    transferredZus: true,
+    transferredTax: 820,
+  },
+  {
+    year: 2021,
+    month: 9,
+    income: 9500,
+    transferredZus: true,
+    transferredTax: 951,
+  },
+  {
+    year: 2021,
+    month: 10,
+    income: 10500,
+    transferredZus: true,
+    transferredTax: 1051,
+  },
+  {
+    year: 2021,
+    month: 11,
+    income: 10500,
+    transferredZus: true,
+    transferredTax: 1051,
+  },
+  {
+    year: 2022,
+    month: 0,
+    income: 8500,
+    transferredZus: true,
+    transferredTax: 820,
   },
 ];
