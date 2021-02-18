@@ -1,4 +1,4 @@
-export const Entries = [
+export const EntriesData = [
   {
     year: 2021,
     month: 0,

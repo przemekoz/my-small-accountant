@@ -1,10 +1,8 @@
 import React from "react";
 import { Months } from "../config/months";
-import { Entries } from "../data/entries";
 
-export const EntriesComponent = (props) => {
-
-  console.log(Entries.length)
+export const Entries = (props) => {
+  const { filteredEntries } = props;
 
   return (
     <table className="table table-light table-striped">
@@ -17,7 +15,7 @@ export const EntriesComponent = (props) => {
         </tr>
       </thead>
       <tbody>
-        { Entries.map(entry => (
+        { filteredEntries.map(entry => (
           <tr key={entry.year + entry.month}>
             <th scope="row">{ entry.year }, { Months[ entry.month ] }</th>
             <td>{ entry.transferredZus ? "TAK" : "NIE" }</td>
