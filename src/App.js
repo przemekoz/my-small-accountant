@@ -1,4 +1,5 @@
 import './App.css';
+import { Calculations } from './components/Calculations';
 import { CurrentDate } from './components/CurrentDate';
 import { EnterIncome } from './components/EnterIncome';
 import { EntriesComponent } from './components/EntriesComponent';
@@ -25,6 +26,7 @@ function App() {
           <div className="col">
             <EnterIncome date={ date } defaultIncome={ Config.defaultIncome } />
             <EntriesComponent />
+            <Calculations date={ date } />
           </div>
         </div>
       </div>
