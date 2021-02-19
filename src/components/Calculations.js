@@ -2,8 +2,7 @@ import React from 'react';
 import { Config } from '../config/config';
 import { getIncomes, getTransferredTax, getZusTransfered, getTaxToPay } from '../helpers';
 
-export const Calculations = (props) => {
-  const { filteredEntries, configTaxYear } = props;
+export const Calculations = ({ filteredEntries, configTaxYear }) => {
 
   const incomes = getIncomes(filteredEntries);
   const countZusTransfered = getZusTransfered(filteredEntries);
