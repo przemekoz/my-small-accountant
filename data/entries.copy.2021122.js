@@ -22,8 +22,8 @@ var EntriesData = [
   {
     year: 2021,
     month: 2,
-    income: 1,
+    income: 4444444444444,
     transferredZus: true,
-    transferredTax: 000000000000000001,
+    transferredTax: 00000000000000001,
   },
 ];

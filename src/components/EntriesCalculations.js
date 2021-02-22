@@ -14,7 +14,6 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
     } catch (error) {
       console.error("Error! getting entries: ", error);
     }
-    return [];
   }
 
   const getData = () => {
@@ -28,7 +27,9 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
     });
   }
 
-  useEffect(() => getData(), []);
+  useEffect(() => {
+    getData();
+  }, []);
 
 
   return (
@@ -61,7 +62,7 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
                 </tbody>
               </table>
             </div>
-            <Calculations filteredEntries={ filteredEntries } currentOrPreviousYear={ currentOrPreviousYear } configTaxYear={ configTaxYear } getData={getData} />
+            <Calculations filteredEntries={ filteredEntries } currentOrPreviousYear={ currentOrPreviousYear } configTaxYear={ configTaxYear } getData={ getData } />
             <div className="row">
               <button type="submit" className="btn btn-success"><Save2 size="17" /> Zapisz obliczony podatek</button>
             </div>
