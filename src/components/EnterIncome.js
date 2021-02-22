@@ -22,7 +22,12 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
   async function saveIncome(income) {
     setIsProgress(true);
     try {
-      return await axios.post('http://localhost:3500/api/save-data/income', { income, transferredZus: transferredZus });
+      return await axios.post('http://localhost:3500/api/save-data/income', {
+        income,
+        transferredZus,
+        month: previousMonth,
+        year: currentOrPreviousYear
+      });
     } catch (error) {
       setIsProgress(false);
       console.error("Error! saving income: ", error);
@@ -41,17 +46,15 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
         Podaj dochód za: { month } { currentOrPreviousYear }
       </div>
       <div className="card-body">
-        <form>
-          <div className="mb-3">
-            {/* <label htmlFor="income" className="form-label">Dochód za: { month }, { currentOrPreviousYear } </label> */ }
-            <input type="number" className="form-control" aria-describedby="income" id="income" name="income" onChange={ onChangeIncome } value={ income } />
-          </div>
-          <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={transferredZus ? "checked" : ""} onChange={onChangeTransferredZus} />
-            <label className="form-check-label" htmlFor="transferredZus">Opłacony ZUS</label>
-          </div>
-          <button className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month }) { isProgress && <Spinner /> }</button>
-        </form>
+        <div className="mb-3">
+          {/* <label htmlFor="income" className="form-label">Dochód za: { month }, { currentOrPreviousYear } </label> */ }
+          <input type="number" className="form-control" aria-describedby="income" id="income" name="income" onChange={ onChangeIncome } value={ income } />
+        </div>
+        <div className="mb-3 form-check">
+          <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={ transferredZus ? "checked" : "" } onChange={ onChangeTransferredZus } />
+          <label className="form-check-label" htmlFor="transferredZus">Opłacony ZUS</label>
+        </div>
+        <button className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month }) { isProgress && <Spinner /> }</button>
       </div>
     </div>
   );

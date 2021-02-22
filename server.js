@@ -27,18 +27,32 @@ app.use(jsonServer.bodyParser);
 const sourcePath = "data/entries.js";
 
 app.post("/api/save-data/income", (req, resp) => {
+  const year = req.body.year;
+  const month = req.body.month;
   const newValue = parseInt(req.body.income, 10);
   const newValueTransferedZus = req.body.transferredZus ? true : false;
+
+  if (!helpers.checkExistsEntry(sourcePath, year, month)) {
+    helpers.placeNewEntry(sourcePath, year, month);
+  }
+
   helpers.readWriteEntries(sourcePath, /income:\s[0-9]*/, "income: " + newValue);
   helpers.readWriteEntries(sourcePath, /transferredZus:\s[true|false]*/, "transferredZus: " + newValueTransferedZus);
-  helpers.copyEntriesDelayed(sourcePath);
+  helpers.copyDataFile(sourcePath);
   resp.json({ status: "ok", newValue, newValueTransferedZus })
 });
 
 app.post("/api/save-data/tax", (req, resp) => {
-  const newValue = parseInt(req.body.transferredTax, 10);;
+  const year = req.body.year;
+  const month = req.body.month;
+  const newValue = parseInt(req.body.transferredTax, 10);
+  
+  if (!helpers.checkExistsEntry(sourcePath, year, month)) {
+    helpers.placeNewEntry(sourcePath, year, month);
+  }
+
   helpers.readWriteEntries(sourcePath, /transferredTax:\s[0-9]*/, "transferredTax: " + newValue);
-  helpers.copyEntriesDelayed(sourcePath);
+  helpers.copyDataFile(sourcePath);
   resp.json({ status: "ok", newValue })
 });
 
