@@ -2,7 +2,6 @@ import { CurrentDate } from './components/CurrentDate';
 import { EnterIncome } from './components/EnterIncome';
 import { EntriesCalculations } from './components/EntriesCalculations';
 import { Config } from './config/config';
-// import { EntriesData } from './data/entries';
 import { getPreviousMonthYear } from "./helpers";
 import { Calculator } from "react-bootstrap-icons";
 

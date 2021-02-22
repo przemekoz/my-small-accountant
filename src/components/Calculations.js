@@ -1,8 +1,9 @@
 import React from 'react';
 import { Config } from '../config/config';
 import { getIncomes, getTransferredTax, getZusTransfered, getTaxToPay } from '../helpers';
+import { ArrowClockwise } from "react-bootstrap-icons";
 
-export const Calculations = ({ filteredEntries, configTaxYear }) => {
+export const Calculations = ({ filteredEntries, configTaxYear, getData }) => {
 
   const incomes = getIncomes(filteredEntries);
   const countZusTransfered = getZusTransfered(filteredEntries);
@@ -29,8 +30,8 @@ export const Calculations = ({ filteredEntries, configTaxYear }) => {
         { formula }
       </div>
       <div className="row mb-3">
-        <strong>Podatek do zapłaty: { getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax) }</strong>
-        <button>odśwież</button>
+        <strong className="mr-2">Podatek do zapłaty: { getTaxToPay(incomes, countZusTransfered, zusSpl, tax, zusZdr, countTransferedTax) }</strong>
+        <button type="submit" onClick={getData} className="btn btn-outline-secondary btn-sm border-none"><ArrowClockwise size="16" /></button>
       </div>
     </>
   );

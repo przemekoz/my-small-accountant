@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Months } from "../config/months";
-import { ArrowUpRight } from "react-bootstrap-icons";
+import { ArrowDown } from "react-bootstrap-icons";
 
 export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome }) => {
 
@@ -30,7 +30,7 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
             <input type="checkbox" className="form-check-input" name="transferedZus" id="transferedZus" />
             <label className="form-check-label" htmlFor="transferedZus">Opłacony ZUS</label>
           </div>
-          <button type="submit" className="btn btn-primary" onClick={ submitIncome }><ArrowUpRight size="17" /> Zapisz dochód ({ month })</button>
+          <button type="submit" className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month })</button>
         </form>
       </div>
     </div>

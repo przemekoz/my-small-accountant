@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Calculations } from "./Calculations";
-import { EntriesData } from "../data/entries";
 import { Save2 } from "react-bootstrap-icons";
 import { Months } from "../config/months";
 
 export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPreviousYear, configTaxYear }) => {
 
-  const filteredEntries = EntriesData.filter(entry => {
-    const yearCondition = currentMonth > 0 ? entry.year === currentYear : entry.year === currentOrPreviousYear;
-    const monthCondition = currentMonth > 0 ? entry.month < currentMonth : true;
-    return yearCondition && monthCondition;
-  });
+  const [ filteredEntries, setFilteredEntries ] = useState([]);
+
+  async function getEntries() {
+    try {
+      return await axios.get('http://localhost:3500/api/entries');
+    } catch (error) {
+      console.error("Error! getting entries: ", error);
+    }
+    return [];
+  }
+
+  const getData = () => {
+    getEntries().then(response => {
+      const filteredEntries = response.data.filter(entry => {
+        const yearCondition = currentMonth > 0 ? entry.year === currentYear : entry.year === currentOrPreviousYear;
+        const monthCondition = currentMonth > 0 ? entry.month < currentMonth : true;
+        return yearCondition && monthCondition;
+      });
+      setFilteredEntries(filteredEntries);
+    });
+  }
+
+  useEffect(() => getData(), []);
+
 
   return (
     <>
@@ -42,7 +61,7 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
                 </tbody>
               </table>
             </div>
-            <Calculations filteredEntries={ filteredEntries } currentOrPreviousYear={ currentOrPreviousYear } configTaxYear={ configTaxYear } />
+            <Calculations filteredEntries={ filteredEntries } currentOrPreviousYear={ currentOrPreviousYear } configTaxYear={ configTaxYear } getData={getData} />
             <div className="row">
               <button type="submit" className="btn btn-success"><Save2 size="17" /> Zapisz obliczony podatek</button>
             </div>
