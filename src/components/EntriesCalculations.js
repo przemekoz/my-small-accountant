@@ -4,9 +4,14 @@ import { Calculations } from "./Calculations";
 import { Save2 } from "react-bootstrap-icons";
 import { Months } from "../config/months";
 
-export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPreviousYear, configTaxYear }) => {
+export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPreviousYear, configTaxYear, previousMonth }) => {
 
+  const [ tax, setTax ] = useState(0);
   const [ filteredEntries, setFilteredEntries ] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   async function getEntries() {
     try {
@@ -27,10 +32,23 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
     });
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
+  async function saveTax(transferredTax) {
+    try {
+      return await axios.post('http://localhost:3500/api/save-data/tax', {
+        transferredTax,
+        month: previousMonth,
+        year: currentOrPreviousYear
+      });
+    } catch (error) {
+      console.error("Error! saving tax: ", error);
+    }
+  }
 
+  const submitTax = () => {
+    saveTax(tax).then(response => {
+      // success
+    });
+  }
 
   return (
     <>
@@ -62,9 +80,15 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
                 </tbody>
               </table>
             </div>
-            <Calculations filteredEntries={ filteredEntries } currentOrPreviousYear={ currentOrPreviousYear } configTaxYear={ configTaxYear } getData={ getData } />
+            <Calculations
+              filteredEntries={ filteredEntries }
+              currentOrPreviousYear={ currentOrPreviousYear }
+              configTaxYear={ configTaxYear }
+              getData={ getData }
+              setTax={ setTax }
+            />
             <div className="row">
-              <button type="submit" className="btn btn-success"><Save2 size="17" /> Zapisz obliczony podatek</button>
+              <button type="submit" className="btn btn-success" onClick={ submitTax } ><Save2 size="17" /> Zapisz obliczony podatek</button>
             </div>
           </div>
         </div>

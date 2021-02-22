@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { Months } from "../config/months";
 import { ArrowDown } from "react-bootstrap-icons";
 import axios from "axios";
-import { Spinner } from "./Spinner";
 
 export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome }) => {
 
   const [ income, setIncome ] = useState(defaultIncome);
   const [ transferredZus, setTransferredZus ] = useState(true);
-  const [ isProgress, setIsProgress ] = useState(false);
   const month = Months[ previousMonth ];
 
   const onChangeIncome = (event) => {
@@ -20,7 +18,6 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
   }
 
   async function saveIncome(income) {
-    setIsProgress(true);
     try {
       return await axios.post('http://localhost:3500/api/save-data/income', {
         income,
@@ -29,14 +26,14 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
         year: currentOrPreviousYear
       });
     } catch (error) {
-      setIsProgress(false);
+      
       console.error("Error! saving income: ", error);
     }
   }
 
   const submitIncome = () => {
     saveIncome(income).then(response => {
-      setIsProgress(false);
+      // success
     });
   }
 
@@ -54,7 +51,7 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
           <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={ transferredZus ? "checked" : "" } onChange={ onChangeTransferredZus } />
           <label className="form-check-label" htmlFor="transferredZus">Opłacony ZUS</label>
         </div>
-        <button className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month }) { isProgress && <Spinner /> }</button>
+        <button className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month })</button>
       </div>
     </div>
   );

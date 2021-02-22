@@ -33,8 +33,8 @@ var EntriesData = [
      id: 2021_3,
      year: 2021,
      month: 3,
-     income: 111111111111,
-     transferredZus: false,
+     income: 3333333333,
+     transferredZus: true,
      transferredTax: 0,
    },
  ];

@@ -48,7 +48,7 @@ function App() {
             <div className="mb-4">
               <CurrentDate { ...propsCurrentMonthYear } currentDate={ currentDate } />
             </div>
-            <div className="card border-info">
+            <div className="card border-info mb-4">
               <div className="card-header bg-dark text-light">
                 Składki za rok: { currentOrPreviousYear }
               </div>
