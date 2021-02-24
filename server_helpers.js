@@ -5,11 +5,7 @@ module.exports = {
   replaceLast,
   checkExistsEntry,
   placeNewEntry,
-  copyDataFile: function (sourcePath) {
-    setTimeout(() => {
-      copyDataFile(sourcePath);
-    }, 3000);
-  }
+  copyDataFile,
 };
 
 function readWriteEntries(sourcePath, regExp, replace, year, month) {
@@ -33,7 +29,7 @@ function replaceLast(what, regExp, replacement) {
 function copyDataFile(sourcePath) {
   var date = new Date();
   var destinantionPath = "data/entries.copy." + date.getFullYear() + date.getMonth() + date.getDate() + ".js";
-  fs.copyFile(sourcePath, destinantionPath, (err) => {
+  fs.copyFileSync(sourcePath, destinantionPath, (err) => {
     if (err) {
       console.log("error! can't write copy file.");
     };
@@ -47,13 +43,13 @@ function checkExistsEntry(sourcePath, year, month) {
 }
 
 function getEntry(year, month) {
-  return "  {\r\n \
-    id: " + year + "_" + month + ",\r\n \
-    year: " + year + ",\r\n \
-    month: " + month + ",\r\n \
-    income: 0,\r\n \
-    transferredZus: false,\r\n \
-    transferredTax: 0,\r\n \
-  },\r\n \
+  return " {\r\n \
+  id: " + year + "_" + month + ",\r\n \
+  year: " + year + ",\r\n \
+  month: " + month + ",\r\n \
+  income: 0,\r\n \
+  transferredZus: false,\r\n \
+  transferredTax: 0,\r\n \
+},\r\n \
 ];";
 }

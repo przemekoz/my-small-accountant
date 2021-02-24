@@ -3,34 +3,18 @@ import axios from "axios";
 import { Calculations } from "./Calculations";
 import { Save2 } from "react-bootstrap-icons";
 import { Months } from "../config/months";
+import { getIncomes, getTransferredTax } from "../helpers";
 
-export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPreviousYear, configTaxYear, previousMonth }) => {
+export const EntriesCalculations = ({ filteredEntries, currentOrPreviousYear, configTaxYear, previousMonth, getData }) => {
 
   const [ tax, setTax ] = useState(0);
-  const [ filteredEntries, setFilteredEntries ] = useState([]);
+
+  const incomes = getIncomes(filteredEntries);
+  const countTransferedTax = getTransferredTax(filteredEntries);
 
   useEffect(() => {
     getData();
   }, []);
-
-  async function getEntries() {
-    try {
-      return await axios.get('http://localhost:3500/api/entries');
-    } catch (error) {
-      console.error("Error! getting entries: ", error);
-    }
-  }
-
-  const getData = () => {
-    getEntries().then(response => {
-      const filteredEntries = response.data.filter(entry => {
-        const yearCondition = currentMonth > 0 ? entry.year === currentYear : entry.year === currentOrPreviousYear;
-        const monthCondition = currentMonth > 0 ? entry.month < currentMonth : true;
-        return yearCondition && monthCondition;
-      });
-      setFilteredEntries(filteredEntries);
-    });
-  }
 
   async function saveTax(transferredTax) {
     try {
@@ -46,7 +30,7 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
 
   const submitTax = () => {
     saveTax(tax).then(response => {
-      // success
+      getData();
     });
   }
 
@@ -78,6 +62,13 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
                     </tr>
                   )) }
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <th className="border-top" colSpan="2">Łącznie:</th>
+                    <th className="border-top" scope="row">{countTransferedTax}</th>
+                    <th className="border-top" scope="row">{incomes}</th>
+                  </tr>
+                </tfoot>
               </table>
             </div>
             <Calculations
@@ -86,6 +77,8 @@ export const EntriesCalculations = ({ currentMonth, currentYear, currentOrPrevio
               configTaxYear={ configTaxYear }
               getData={ getData }
               setTax={ setTax }
+              incomes={ incomes }
+              countTransferedTax={ countTransferedTax }
             />
             <div className="row">
               <button type="submit" className="btn btn-success" onClick={ submitTax } ><Save2 size="17" /> Zapisz obliczony podatek</button>

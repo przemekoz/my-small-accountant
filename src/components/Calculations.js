@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { Config } from '../config/config';
-import { getIncomes, getTransferredTax, getZusTransfered, getTaxToPay } from '../helpers';
+import { getZusTransfered, getTaxToPay } from '../helpers';
 import { ArrowClockwise } from "react-bootstrap-icons";
 
-export const Calculations = ({ filteredEntries, configTaxYear, getData, setTax }) => {
+export const Calculations = ({ filteredEntries, configTaxYear, getData, setTax, countTransferedTax, incomes }) => {
 
-  const incomes = getIncomes(filteredEntries);
   const countZusTransfered = getZusTransfered(filteredEntries);
-  const countTransferedTax = getTransferredTax(filteredEntries);
-
+  
   const tax = Config.tax;
   const zusSpl = configTaxYear.zusSpl;
   const zusZdr = configTaxYear.zusZdr;
@@ -26,7 +24,7 @@ export const Calculations = ({ filteredEntries, configTaxYear, getData, setTax }
   useEffect( () => {
     setTax(taxToPay);
     console.log("zmiana taxu")
-  } , [taxToPay])
+  } , [taxToPay, setTax])
 
   return (
     <>

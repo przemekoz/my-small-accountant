@@ -3,7 +3,7 @@ import { Months } from "../config/months";
 import { ArrowDown } from "react-bootstrap-icons";
 import axios from "axios";
 
-export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome }) => {
+export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome, getData }) => {
 
   const [ income, setIncome ] = useState(defaultIncome);
   const [ transferredZus, setTransferredZus ] = useState(true);
@@ -33,7 +33,7 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
 
   const submitIncome = () => {
     saveIncome(income).then(response => {
-      // success
+      getData();
     });
   }
 

@@ -1,26 +1,47 @@
+import React, { useState } from "react";
 import { CurrentDate } from './components/CurrentDate';
 import { EnterIncome } from './components/EnterIncome';
 import { EntriesCalculations } from './components/EntriesCalculations';
 import { Config } from './config/config';
 import { getPreviousMonthYear } from "./helpers";
 import { Calculator } from "react-bootstrap-icons";
+import axios from "axios";
 
 function App() {
   const date = new Date();
   const currentDate = date.getDate();
 
+  const [ filteredEntries, setFilteredEntries ] = useState([]);
+  
+  async function getEntries() {
+    try {
+      return await axios.get('http://localhost:3500/api/entries');
+    } catch (error) {
+      console.error("Error! getting entries: ", error);
+    }
+  }
+
+  const getData = () => {
+    console.log("getData")
+    getEntries().then(response => {
+      const filteredEntries = response.data.filter(entry => {
+        const yearCondition = currentMonth > 0 ? entry.year === currentYear : entry.year === currentOrPreviousYear;
+        const monthCondition = currentMonth > 0 ? entry.month < currentMonth : true;
+        return yearCondition && monthCondition;
+      });
+      setFilteredEntries(filteredEntries);
+    });
+  }
+
+
   // const currentMonth = date.getMonth();
   // const currentYear = date.getFullYear();
   //@todo TESTS
-  const currentMonth = 4;
-  const currentYear = 2021;
+  const currentMonth = 0;
+  const currentYear = 2022;
 
   const [ previousMonth, currentOrPreviousYear ] = getPreviousMonthYear(currentMonth, currentYear);
   const configTaxYear = Config.taxes.find(taxes => taxes.year === currentOrPreviousYear);
-
-  // const hasPraviousMonthIncome = () => {
-  //   return EntriesData.find(entry => entry.month === previousMonth && entry.year === currentOrPreviousYear && entry.income > 0);
-  // }
 
   const propsCurrentMonthYear = {
     currentMonth,
@@ -78,9 +99,9 @@ function App() {
           </div>
           <div className="col">
           <div className="mb-4">
-              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } />
+              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={getData} />
             </div>
-            <EntriesCalculations { ...propsCurrentMonthYear } { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } />
+            <EntriesCalculations { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } getData={getData} filteredEntries={filteredEntries} />
           </div>
         </div>
       </div>
