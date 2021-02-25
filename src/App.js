@@ -11,12 +11,8 @@ function App() {
   const date = new Date();
   const currentDate = date.getDate();
 
-  // const currentMonth = date.getMonth();
-  // const currentYear = date.getFullYear();
-  //@todo TESTS
-  const currentMonth = 0;
-  const currentYear = 2023;
-
+  const currentMonth = date.getMonth();
+  const currentYear = date.getFullYear();
 
   const [ filteredEntries, setFilteredEntries ] = useState([]);
   const [ isProgress, setIsProgress ] = useState(false);
@@ -65,7 +61,7 @@ function App() {
     <div className="App">
       <nav className="navbar navbar-light bg-light mb-5">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
+          <a className="navbar-brand text-primary" href="/">
             <Calculator size="35" className="d-inline-block align-middle mr-2 text-primary" />
             My Small Accountant
           </a>
@@ -105,11 +101,11 @@ function App() {
               </div>
             </div>
             <div className="mb-4">
-              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={ getData } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } setIsProgress={setIsProgress} />
+              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={ getData } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } setIsProgress={ setIsProgress } />
             </div>
           </div>
           <div className="col">
-            <Entries { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } isProgress={isProgress} />
+            <Entries { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } isProgress={ isProgress } />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 export const Config = {
-  defaultIncome: 5900,
+  defaultIncome: 0,
   tax: 15,
   taxes: [
     {
