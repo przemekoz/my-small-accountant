@@ -195,6 +195,6 @@ var EntriesData = [
    month: 11,
    income: 5900,
    transferredZus: true,
-   transferredTax: 0,
+   transferredTax: 519,
  },
  ];

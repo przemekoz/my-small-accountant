@@ -76,9 +76,9 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
           <input type="number" className="form-control" aria-describedby="income" id="income" name="income" onChange={ onChangeIncome } value={ income } />
         </div>
         <div className="mb-3">
-          <label htmlFor="tax" className="form-label">Podatek</label>
+          <label htmlFor="tax" className="form-label">Podatek <small className="text-muted">obliczany na podstawie dochodu</small></label>
           <input type="number" className="form-control" aria-describedby="tax" id="tax" name="tax" value={ tax } disabled />
-          <small className="mr-3">
+          <small className="mr-3 text-muted">
             <Calculations
               filteredEntries={ filteredEntries }
               currentOrPreviousYear={ currentOrPreviousYear }
@@ -94,8 +94,8 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
           <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={ transferredZus ? "checked" : "" } onChange={ onChangeTransferredZus } />
           <label className="form-check-label" htmlFor="transferredZus">Opłacony ZUS</label>
         </div>
-        <button className="btn btn-primary mr-3" onClick={ submitIncome }><Save size="17" /> Zapisz dochód</button>
-        <button type="submit" className="btn btn-success" onClick={ submitTax } ><Save2 size="17" /> Zapisz podatek</button>
+        <button className="btn btn-outline-primary mr-3" onClick={ submitIncome }><Save size="17" className="mr-1" />Zapisz dochód</button>
+        <button type="submit" className="btn btn-outline-secondary" onClick={ submitTax } ><Save2 size="17" className="mr-1" />Zapisz podatek</button>
       </div>
     </div>
   );

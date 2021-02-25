@@ -67,8 +67,8 @@ function App() {
       <nav className="navbar navbar-light bg-light mb-5">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            <Calculator size="35" className="d-inline-block align-middle mr-2" />
-            <strong>My Small Accountant</strong>
+            <Calculator size="35" className="d-inline-block align-middle mr-2 text-primary" />
+            My Small Accountant
           </a>
         </div>
       </nav>
