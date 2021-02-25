@@ -1,4 +1,5 @@
 export const Config = {
+  appVersion: "1.0.0",
   defaultIncome: 0,
   tax: 15,
   taxes: [
