@@ -22,7 +22,6 @@ export const Calculations = ({ filteredEntries, configTaxYear, setTax, countTran
 
   useEffect(() => {
     setTax(taxToPay);
-    console.log("zmiana taxu")
   }, [ taxToPay, setTax ])
 
   return (

@@ -30,7 +30,6 @@ function App() {
   }
 
   const getData = () => {
-    console.log("getData")
     getEntries().then(response => {
       setIsProgress(false);
       const filteredEntries = response.data.filter(entry => {
@@ -78,7 +77,7 @@ function App() {
             <div className="mb-4">
               <CurrentDate { ...propsCurrentMonthYear } currentDate={ currentDate } />
             </div>
-            <div className="card border-info mb-4">
+            <div className="card border-primary mb-4">
               <div className="card-header bg-light text-dark">
                 Składki za rok: <strong>{ currentOrPreviousYear }</strong>
               </div>
