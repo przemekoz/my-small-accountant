@@ -19,6 +19,7 @@ function App() {
 
 
   const [ filteredEntries, setFilteredEntries ] = useState([]);
+  const [ isProgress, setIsProgress ] = useState(false);
 
   async function getEntries() {
     try {
@@ -31,6 +32,7 @@ function App() {
   const getData = () => {
     console.log("getData")
     getEntries().then(response => {
+      setIsProgress(false);
       const filteredEntries = response.data.filter(entry => {
         const yearCondition = currentMonth > 0 ? entry.year === currentYear : entry.year === currentOrPreviousYear;
         const monthCondition = currentMonth > 0 ? entry.month < currentMonth : true;
@@ -58,7 +60,7 @@ function App() {
 
   useEffect(() => {
     getData();
-  }, [ ]);
+  }, []);
 
   return (
     <div className="App">
@@ -104,11 +106,11 @@ function App() {
               </div>
             </div>
             <div className="mb-4">
-              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={ getData } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } />
+              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={ getData } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } setIsProgress={setIsProgress} />
             </div>
           </div>
           <div className="col">
-            <Entries { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } />
+            <Entries { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } isProgress={isProgress} />
           </div>
         </div>
       </div>

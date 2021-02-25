@@ -4,7 +4,7 @@ import { ArrowClockwise, Save, Save2 } from "react-bootstrap-icons";
 import { Calculations } from "./Calculations";
 import { Http } from "../helpers/http";
 
-export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome, getData, filteredEntries, configTaxYear, incomes, countTransferedTax }) => {
+export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome, getData, filteredEntries, configTaxYear, incomes, countTransferedTax, setIsProgress }) => {
 
   const [ tax, setTax ] = useState(defaultIncome);
   const [ income, setIncome ] = useState(defaultIncome);
@@ -12,19 +12,25 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
   const month = Months[ previousMonth ];
 
   const refreshData = () => {
+    setIsProgress(true);
     setTimeout(() => {
       getData();
     }, 1000)
-  }
+  };
+
+  const handleRefreshClick = () => {
+    setIsProgress(true);
+    getData();
+  };
 
   const onChangeIncome = (event) => {
     setIncome(event.target.value);
-  }
+  };
 
   const onChangeTransferredZus = (event) => {
     event.persist();
     setTransferredZus(event.target.checked);
-  }
+  };
 
   async function saveIncome(income) {
     try {
@@ -37,11 +43,11 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
     } catch (error) {
       console.error("Error! saving income: ", error);
     }
-  }
+  };
 
   const submitIncome = () => {
     saveIncome(income).then(refreshData);
-  }
+  };
 
   async function saveTax(transferredTax) {
     try {
@@ -53,11 +59,11 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
     } catch (error) {
       console.error("Error! saving tax: ", error);
     }
-  }
+  };
 
   const submitTax = () => {
     saveTax(tax).then(refreshData);
-  }
+  };
 
   return (
     <div className="card border-primary">
@@ -82,7 +88,7 @@ export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncom
               countTransferedTax={ countTransferedTax }
             />
           </small>
-          <button type="submit" onClick={ getData } className="btn btn-outline-light btn-sm"><ArrowClockwise size="16" color="primary" /></button>
+          <button type="submit" onClick={ handleRefreshClick } className="btn btn-outline-light btn-sm"><ArrowClockwise size="16" color="primary" /></button>
         </div>
         <div className="mb-3 form-check">
           <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={ transferredZus ? "checked" : "" } onChange={ onChangeTransferredZus } />

@@ -193,8 +193,8 @@ var EntriesData = [
    id: 2022_11,
    year: 2022,
    month: 11,
-   income: 111,
-   transferredZus: false,
+   income: 5900,
+   transferredZus: true,
    transferredTax: 0,
  },
  ];

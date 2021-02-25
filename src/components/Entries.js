@@ -1,15 +1,16 @@
 import React from "react";
 import { Months } from "../config/months";
+import { Progressbar } from "./Progressbar";
 
-export const Entries = ({ filteredEntries, currentOrPreviousYear, configTaxYear, incomes, countTransferedTax }) => {
-
+export const Entries = ({ filteredEntries, currentOrPreviousYear, configTaxYear, incomes, countTransferedTax, isProgress }) => {
   return (
     <>
       <div className="card border-info">
         <div className="card-header bg-light text-dark">
-          Lista opłat za rok: <strong>{currentOrPreviousYear}</strong>
-      </div>
+          Lista opłat za rok: <strong>{ currentOrPreviousYear }</strong>
+        </div>
         <div className="card-body">
+          <Progressbar isVisible={isProgress} />
           <div className="container">
             <div className="row">
               <table className="table table-light table-striped">
