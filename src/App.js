@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CurrentDate } from './components/CurrentDate';
 import { EnterIncome } from './components/EnterIncome';
-import { EntriesCalculations } from './components/EntriesCalculations';
+import { Entries } from './components/Entries';
 import { Config } from './config/config';
-import { getPreviousMonthYear } from "./helpers";
+import { getIncomes, getPreviousMonthYear, getTransferredTax } from "./helpers";
 import { Calculator } from "react-bootstrap-icons";
-import axios from "axios";
+import { Http } from "./helpers/http";
 
 function App() {
   const date = new Date();
   const currentDate = date.getDate();
 
+  // const currentMonth = date.getMonth();
+  // const currentYear = date.getFullYear();
+  //@todo TESTS
+  const currentMonth = 0;
+  const currentYear = 2023;
+
+
   const [ filteredEntries, setFilteredEntries ] = useState([]);
-  
+
   async function getEntries() {
     try {
-      return await axios.get('http://localhost:3500/api/entries');
+      return await Http.get('api/entries');
     } catch (error) {
       console.error("Error! getting entries: ", error);
     }
@@ -33,13 +40,6 @@ function App() {
     });
   }
 
-
-  // const currentMonth = date.getMonth();
-  // const currentYear = date.getFullYear();
-  //@todo TESTS
-  const currentMonth = 0;
-  const currentYear = 2022;
-
   const [ previousMonth, currentOrPreviousYear ] = getPreviousMonthYear(currentMonth, currentYear);
   const configTaxYear = Config.taxes.find(taxes => taxes.year === currentOrPreviousYear);
 
@@ -52,6 +52,13 @@ function App() {
     previousMonth,
     currentOrPreviousYear
   };
+
+  const incomes = getIncomes(filteredEntries);
+  const countTransferedTax = getTransferredTax(filteredEntries);
+
+  useEffect(() => {
+    getData();
+  }, [ ]);
 
   return (
     <div className="App">
@@ -70,8 +77,8 @@ function App() {
               <CurrentDate { ...propsCurrentMonthYear } currentDate={ currentDate } />
             </div>
             <div className="card border-info mb-4">
-              <div className="card-header bg-dark text-light">
-                Składki za rok: { currentOrPreviousYear }
+              <div className="card-header bg-light text-dark">
+                Składki za rok: <strong>{ currentOrPreviousYear }</strong>
               </div>
               <div className="card-body">
                 <table className="table table-light table-striped">
@@ -96,12 +103,12 @@ function App() {
                 </table>
               </div>
             </div>
+            <div className="mb-4">
+              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={ getData } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } />
+            </div>
           </div>
           <div className="col">
-          <div className="mb-4">
-              <EnterIncome { ...propsPreviousMonthYear } defaultIncome={ Config.defaultIncome } getData={getData} />
-            </div>
-            <EntriesCalculations { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } getData={getData} filteredEntries={filteredEntries} />
+            <Entries { ...propsPreviousMonthYear } configTaxYear={ configTaxYear } filteredEntries={ filteredEntries } countTransferedTax={ countTransferedTax } incomes={ incomes } />
           </div>
         </div>
       </div>

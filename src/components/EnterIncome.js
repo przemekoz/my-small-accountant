@@ -1,57 +1,95 @@
 import React, { useState } from "react";
 import { Months } from "../config/months";
-import { ArrowDown } from "react-bootstrap-icons";
-import axios from "axios";
+import { ArrowClockwise, Save, Save2 } from "react-bootstrap-icons";
+import { Calculations } from "./Calculations";
+import { Http } from "../helpers/http";
 
-export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome, getData }) => {
+export const EnterIncome = ({ previousMonth, currentOrPreviousYear, defaultIncome, getData, filteredEntries, configTaxYear, incomes, countTransferedTax }) => {
 
+  const [ tax, setTax ] = useState(defaultIncome);
   const [ income, setIncome ] = useState(defaultIncome);
   const [ transferredZus, setTransferredZus ] = useState(true);
   const month = Months[ previousMonth ];
+
+  const refreshData = () => {
+    setTimeout(() => {
+      getData();
+    }, 1000)
+  }
 
   const onChangeIncome = (event) => {
     setIncome(event.target.value);
   }
 
   const onChangeTransferredZus = (event) => {
+    event.persist();
     setTransferredZus(event.target.checked);
   }
 
   async function saveIncome(income) {
     try {
-      return await axios.post('http://localhost:3500/api/save-data/income', {
+      return await Http.post('api/save-data/income', {
         income,
         transferredZus,
         month: previousMonth,
         year: currentOrPreviousYear
       });
     } catch (error) {
-      
       console.error("Error! saving income: ", error);
     }
   }
 
   const submitIncome = () => {
-    saveIncome(income).then(response => {
-      getData();
-    });
+    saveIncome(income).then(refreshData);
+  }
+
+  async function saveTax(transferredTax) {
+    try {
+      return await Http.post('api/save-data/tax', {
+        transferredTax,
+        month: previousMonth,
+        year: currentOrPreviousYear
+      });
+    } catch (error) {
+      console.error("Error! saving tax: ", error);
+    }
+  }
+
+  const submitTax = () => {
+    saveTax(tax).then(refreshData);
   }
 
   return (
     <div className="card border-primary">
       <div className="card-header bg-dark text-light">
-        Podaj dochód za: { month } { currentOrPreviousYear }
+        Rozliczenie za: <strong>{ month } { currentOrPreviousYear }</strong>
       </div>
       <div className="card-body">
         <div className="mb-3">
-          {/* <label htmlFor="income" className="form-label">Dochód za: { month }, { currentOrPreviousYear } </label> */ }
+          <label htmlFor="income" className="form-label">Dochód</label>
           <input type="number" className="form-control" aria-describedby="income" id="income" name="income" onChange={ onChangeIncome } value={ income } />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="tax" className="form-label">Podatek</label>
+          <input type="number" className="form-control" aria-describedby="tax" id="tax" name="tax" value={ tax } disabled />
+          <small className="mr-3">
+            <Calculations
+              filteredEntries={ filteredEntries }
+              currentOrPreviousYear={ currentOrPreviousYear }
+              configTaxYear={ configTaxYear }
+              setTax={ setTax }
+              incomes={ incomes }
+              countTransferedTax={ countTransferedTax }
+            />
+          </small>
+          <button type="submit" onClick={ getData } className="btn btn-outline-light btn-sm"><ArrowClockwise size="16" color="primary" /></button>
         </div>
         <div className="mb-3 form-check">
           <input type="checkbox" className="form-check-input" name="transferredZus" id="transferredZus" checked={ transferredZus ? "checked" : "" } onChange={ onChangeTransferredZus } />
           <label className="form-check-label" htmlFor="transferredZus">Opłacony ZUS</label>
         </div>
-        <button className="btn btn-primary" onClick={ submitIncome }><ArrowDown size="17" /> Zapisz dochód ({ month })</button>
+        <button className="btn btn-primary mr-3" onClick={ submitIncome }><Save size="17" /> Zapisz dochód</button>
+        <button type="submit" className="btn btn-success" onClick={ submitTax } ><Save2 size="17" /> Zapisz podatek</button>
       </div>
     </div>
   );
