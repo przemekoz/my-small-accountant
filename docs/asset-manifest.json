@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.40445039.chunk.css",
-    "main.js": "/static/js/main.27540287.chunk.js",
-    "main.js.map": "/static/js/main.27540287.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.a07d8bfe.js",
-    "runtime-main.js.map": "/static/js/runtime-main.a07d8bfe.js.map",
-    "static/css/2.2295ac45.chunk.css": "/static/css/2.2295ac45.chunk.css",
-    "static/js/2.81a3bdce.chunk.js": "/static/js/2.81a3bdce.chunk.js",
-    "static/js/2.81a3bdce.chunk.js.map": "/static/js/2.81a3bdce.chunk.js.map",
-    "static/js/3.df8f8347.chunk.js": "/static/js/3.df8f8347.chunk.js",
-    "static/js/3.df8f8347.chunk.js.map": "/static/js/3.df8f8347.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.2295ac45.chunk.css.map": "/static/css/2.2295ac45.chunk.css.map",
-    "static/css/main.40445039.chunk.css.map": "/static/css/main.40445039.chunk.css.map",
-    "static/js/2.81a3bdce.chunk.js.LICENSE.txt": "/static/js/2.81a3bdce.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg"
+    "main.css": "/my-small-accountant/static/css/main.40445039.chunk.css",
+    "main.js": "/my-small-accountant/static/js/main.fc10909f.chunk.js",
+    "main.js.map": "/my-small-accountant/static/js/main.fc10909f.chunk.js.map",
+    "runtime-main.js": "/my-small-accountant/static/js/runtime-main.07083096.js",
+    "runtime-main.js.map": "/my-small-accountant/static/js/runtime-main.07083096.js.map",
+    "static/css/2.2295ac45.chunk.css": "/my-small-accountant/static/css/2.2295ac45.chunk.css",
+    "static/js/2.81a3bdce.chunk.js": "/my-small-accountant/static/js/2.81a3bdce.chunk.js",
+    "static/js/2.81a3bdce.chunk.js.map": "/my-small-accountant/static/js/2.81a3bdce.chunk.js.map",
+    "static/js/3.df8f8347.chunk.js": "/my-small-accountant/static/js/3.df8f8347.chunk.js",
+    "static/js/3.df8f8347.chunk.js.map": "/my-small-accountant/static/js/3.df8f8347.chunk.js.map",
+    "index.html": "/my-small-accountant/index.html",
+    "static/css/2.2295ac45.chunk.css.map": "/my-small-accountant/static/css/2.2295ac45.chunk.css.map",
+    "static/css/main.40445039.chunk.css.map": "/my-small-accountant/static/css/main.40445039.chunk.css.map",
+    "static/js/2.81a3bdce.chunk.js.LICENSE.txt": "/my-small-accountant/static/js/2.81a3bdce.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/my-small-accountant/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a07d8bfe.js",
+    "static/js/runtime-main.07083096.js",
     "static/css/2.2295ac45.chunk.css",
     "static/js/2.81a3bdce.chunk.js",
     "static/css/main.40445039.chunk.css",
-    "static/js/main.27540287.chunk.js"
+    "static/js/main.fc10909f.chunk.js"
   ]
 }
